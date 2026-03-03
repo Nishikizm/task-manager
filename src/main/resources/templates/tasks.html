@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <!-- <link rel="stylesheet" th:href="@{/css/style.css}"> -->
+        <link rel="stylesheet" href="../static/css/style.css">
+        <title>Task Manager</title>
+    </head>
+    <body>
+        <h1>Task List</h1>
+        <button>Add Task</button>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Deadline</th>
+                    <th>Completed</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>Sample</td>
+                    <td>Sample</td>
+                    <td>Sample</td>
+                    <td><a href="#">Edit</a><a href="#">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
