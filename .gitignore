@@ -16,3 +16,6 @@ logs/
 # === OS ===
 Thumbs.db
 .DS_Store
+
+# === environment ===
+application.properties
