@@ -1,5 +1,11 @@
 package io.github.nishikizm.taskmanager.web.response;
 
-public class TaskResponse {
-    
-}
+import java.time.Instant;
+
+public record TaskResponse(
+    Long id,
+    String title, 
+    String description, 
+    Instant deadline, 
+    boolean completed
+) {}
