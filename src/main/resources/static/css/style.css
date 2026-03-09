@@ -1,3 +1,52 @@
 h1 {
     color: red;
 }
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+fieldset {
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+legend {
+    display: block;
+    padding: 0px;
+    font-weight: bold;
+}
+
+input[type="text"], textarea {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#modalForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    padding: 10px 20px 10px 20px;
+}
+
+.close {
+    text-align: right;
+}
+
+.formParts {
+    margin-bottom: 20px;
+}
+
+.formActions {
+    text-align: center;
+}
+
+.formActions button {
+    width: 60px;
+}
