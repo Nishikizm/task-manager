@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class TaskController {
     
-    @GetMapping("/test")
+    @GetMapping("/tasks")
     public String test(Model model) {
         model.addAttribute("message", "Hello, Thymeleaf!");
-        return "test";
+        return "tasks";
     }
 }
