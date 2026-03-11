@@ -2,3 +2,5 @@ spring.jpa.database=POSTGRESQL
 spring.datasource.url=jdbc:postgresql://localhost:5432/your_db
 spring.datasource.username=your_user
 spring.datasource.password=your_password
+
+app.time-zone=Asia/Tokyo

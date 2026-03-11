@@ -1,14 +1,15 @@
 package io.github.nishikizm.taskmanager.service;
 
+import java.time.Instant;
 import java.util.List;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import io.github.nishikizm.taskmanager.domain.entity.Task;
 import io.github.nishikizm.taskmanager.domain.exception.TaskNotFoundException;
 import io.github.nishikizm.taskmanager.mapper.TaskMapper;
+import io.github.nishikizm.taskmanager.mapper.converter.DeadlineConverter;
 import io.github.nishikizm.taskmanager.repository.TaskRepository;
 import io.github.nishikizm.taskmanager.web.request.TaskCreateForm;
 import io.github.nishikizm.taskmanager.web.request.TaskPatchForm;
@@ -17,18 +18,20 @@ import io.github.nishikizm.taskmanager.web.response.TaskResponse;
 @Service
 public class TaskService {
     
+    private final DeadlineConverter converter;
     private final TaskMapper mapper;
     private final TaskRepository repository;
 
-    @Autowired
-    public TaskService(TaskMapper mapper, TaskRepository repository) {
+    public TaskService(DeadlineConverter converter, TaskMapper mapper, TaskRepository repository) {
+        this.converter = converter;
         this.mapper = mapper;
         this.repository = repository;
     }
 
     @Transactional
     public void createTask(@Valid TaskCreateForm form) {
-        Task task = mapper.toEntity(form);
+        Instant deadline = converter.toInstant(form.year(), form.month(), form.day(), form.time());
+        Task task = mapper.toEntity(form.title(), form.description(), deadline);
         repository.save(task);
     }
 
@@ -44,7 +47,7 @@ public class TaskService {
 
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<TaskResponse> findAll() {
         return repository.findAll().stream()
             .map(mapper::toDTO)
