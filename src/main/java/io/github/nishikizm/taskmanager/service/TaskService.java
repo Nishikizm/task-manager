@@ -1,5 +1,6 @@
 package io.github.nishikizm.taskmanager.service;
 
+import java.util.List;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import io.github.nishikizm.taskmanager.mapper.TaskMapper;
 import io.github.nishikizm.taskmanager.repository.TaskRepository;
 import io.github.nishikizm.taskmanager.web.request.TaskCreateForm;
 import io.github.nishikizm.taskmanager.web.request.TaskPatchForm;
+import io.github.nishikizm.taskmanager.web.response.TaskResponse;
 
 @Service
 public class TaskService {
@@ -40,6 +42,13 @@ public class TaskService {
         form.deadline().ifPresent(task::changeDeadline);
         form.completed().ifPresent(c -> { if(c) task.complete(); else task.reopen(); });
 
+    }
+
+    @Transactional
+    public List<TaskResponse> findAll() {
+        return repository.findAll().stream()
+            .map(mapper::toDTO)
+            .toList();
     }
 
     @Transactional

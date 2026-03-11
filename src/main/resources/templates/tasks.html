@@ -19,11 +19,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr th:each="task: ${tasks}">
                     <td><input type="checkbox"></td>
-                    <td>Sample</td>
-                    <td>Sample</td>
-                    <td>Sample</td>
+                    <td th:text="${task.title}">Sample</td>
+                    <td th:text="${task.deadline}">Sample</td>
+                    <td><input type="checkbox" th:checked="${task.completed}"></td>
                     <td><a href="#">Edit</a><a href="#">Delete</a></td>
                 </tr>
             </tbody>
