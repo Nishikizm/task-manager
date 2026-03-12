@@ -16,4 +16,17 @@ $(function() {
         const $back = $(e.target).closest('#modalForm');
         if(!$back.length) { $('#modalOverlay').fadeOut(); }
     });
+
+    $(document).on('submit', '#form', function(e) {
+        const $form = $('#form');
+        const $btn = $form.find('#formBtn');
+
+        $form.preventDefault();
+        $btn.prop('disabled', true).text('Saving...');
+        $.ajax({
+            url: $form.attr('action'), 
+            type: $form.attr('method'), 
+            data: $form.sereialize()
+        })
+    });
 });

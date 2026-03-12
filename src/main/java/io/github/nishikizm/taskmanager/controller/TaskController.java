@@ -2,6 +2,9 @@ package io.github.nishikizm.taskmanager.controller;
 
 import java.util.List;
 import jakarta.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +34,15 @@ public class TaskController {
     }
 
     @PostMapping("/tasks")
-    public String create(@Valid @ModelAttribute TaskCreateForm form, BindingResult binding) {
-        return "tasks";
+    public ResponseEntity<Void> create(@Valid @ModelAttribute("taskForm") 
+        TaskCreateForm form, 
+        BindingResult binding) {
+        
+        try {
+            service.createTask(form);
+        } catch(IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok().build();
     }
 }

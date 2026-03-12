@@ -1,5 +1,6 @@
 package io.github.nishikizm.taskmanager.mapper.converter;
 
+import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -20,8 +21,12 @@ public class DeadlineConverter {
         int hour = Integer.parseInt(timeArray[0].strip());
         int minute = Integer.parseInt(timeArray[1].strip());
 
-        return ZonedDateTime.of(year, month, day, hour, minute, 0, 0, zoneId)
-                .toInstant();
+        try {
+            return ZonedDateTime.of(year, month, day, hour, minute, 0, 0, zoneId)
+                    .toInstant();
+        } catch(DateTimeException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
 }
