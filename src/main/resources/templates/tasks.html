@@ -18,14 +18,8 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr th:each="task: ${tasks}">
-                    <td><input type="checkbox"></td>
-                    <td th:text="${task.title}">Sample</td>
-                    <td th:text="${task.deadline}">Sample</td>
-                    <td><input type="checkbox" th:checked="${task.completed}" th:disabled="${task.completed}"></td>
-                    <td><a href="#">Edit</a><a href="#">Delete</a></td>
-                </tr>
+            <tbody
+                th:replace="~{fragments/list :: taskList}">
             </tbody>
         </table>
         <div id="modalOverlay">
@@ -33,10 +27,7 @@
                 <div class="closeModal">
                     <button type="button">×</button>
                 </div>
-                <div th:replace="~{fragments/form :: inputForm(
-                    taskForm=${taskForm}, 
-                    url=@{/tasks}, 
-                    method='post')}">
+                <div th:replace="~{fragments/form :: inputForm}">
                 </div>
             </div>
         </div>

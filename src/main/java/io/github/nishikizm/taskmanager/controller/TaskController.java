@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.github.nishikizm.taskmanager.service.TaskService;
 import io.github.nishikizm.taskmanager.web.request.TaskCreateForm;
@@ -33,7 +34,24 @@ public class TaskController {
         return "tasks";
     }
 
+    @GetMapping("tasks/form")
+    public String getCreateForm(Model model) {
+        model.addAttribute("taskForm", new TaskCreateForm("", "", 2026, 1, 1, "00:00", false));
+        model.addAttribute("url", "/tasks");
+        model.addAttribute("method", "post");
+        return "fragments/form :: inputForm";
+    }
+
+    @GetMapping("tasks/list")
+    public String getList(Model model) {
+        List<TaskResponse> tasks = service.findAll();
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("taskForm", new TaskCreateForm("", "", 2026, 1, 1, "00:00", false));
+        return "fragments/list :: taskList";
+    }
+
     @PostMapping("/tasks")
+    @ResponseBody
     public ResponseEntity<Void> create(@Valid @ModelAttribute("taskForm") 
         TaskCreateForm form, 
         BindingResult binding) {
