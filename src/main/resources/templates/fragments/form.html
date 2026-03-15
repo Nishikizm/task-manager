@@ -12,16 +12,31 @@
             <fieldset>
                 <legend>Deadline</legend>
                 <select th:field="*{year}">
-                    <option value="2026">2026</option>
+                    <option value="" selected disabled>- year -</option>
+                    <th:block th:each="y: ${#numbers.sequence(2000, 2050)}">
+                        <option th:value="${y}" th:text="${y}"></option>
+                    </th:block> 
                 </select>
                 <select th:field="*{month}">
-                    <option value="3">March</option>
+                    <option value="" selected disabled>- month -</option>
+                    <th:block th:each="m: ${#numbers.sequence(1, 12)}">
+                        <option th:value="${m}" th:text="#{${'month.' + m}}"></option>
+                    </th:block>
                 </select>
                 <select th:field="*{day}">
-                    <option value="9">9</option>
+                    <option value="" selected disabled>- day -</option>
+                    <th:block th:each="d: ${#numbers.sequence(1, 31)}">
+                        <option th:value="${d}" th:text="${d}"></option>
+                    </th:block>
                 </select>
                 <select th:field="*{time}">
-                    <option value="10:00">10:00</option>
+                    <option value="" selected disabled>- time -</option>
+                    <th:block th:each="h: ${#numbers.sequence(0, 23)}">
+                        <th:block th:each="m: ${#numbers.sequence(0, 30, 30)}" th:with="time=${
+                                #numbers.formatInteger(h, 2) + ':' + #numbers.formatInteger(m, 2)}">
+                            <option th:value="${time}" th:text="${time}"></option>
+                        </th:block>
+                    </th:block>
                 </select>
             </fieldset>
         </div>

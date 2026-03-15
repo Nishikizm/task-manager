@@ -4,6 +4,7 @@ $(function() {
         $.get('tasks/form', function(html) {
             $('#formFragment').replaceWith(html);
             $('#modalOverlay').fadeIn();
+            $('#title').focus();
         });
     });
 
