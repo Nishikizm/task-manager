@@ -23,6 +23,14 @@ td a {
     margin: 3px;
 }
 
+#list tr:hover {
+    background-color: aquamarine;
+}
+
+.is-active {
+    background-color: aquamarine;
+}
+
 label {
     display: block;
     margin-bottom: 5px;

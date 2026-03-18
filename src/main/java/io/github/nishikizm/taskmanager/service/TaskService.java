@@ -2,6 +2,7 @@ package io.github.nishikizm.taskmanager.service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,9 +56,15 @@ public class TaskService {
     }
 
     @Transactional
-    public void deleteTask(Long id) {
-        Task task = repository.findById(id)
-            .orElseThrow(() -> new TaskNotFoundException(id));
-        repository.delete(task);
+    public int deleteTask(List<Long> idList) {
+        List<Long> uniqueIdList = idList.stream()
+            .distinct()
+            .filter(Objects::nonNull)
+            .toList();
+        List<Task> taskList = repository.findAllById(uniqueIdList);
+        
+        if(taskList.isEmpty()) { throw new TaskNotFoundException(null); }
+        repository.deleteAll(taskList);
+        return taskList.size();
     }
 }

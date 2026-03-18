@@ -8,9 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.github.nishikizm.taskmanager.service.TaskService;
@@ -42,7 +44,7 @@ public class TaskController {
         return "fragments/form :: inputForm";
     }
 
-    @GetMapping("tasks/list")
+    @GetMapping("/tasks/list")
     public String getList(Model model) {
         List<TaskResponse> tasks = service.findAll();
         model.addAttribute("tasks", tasks);
@@ -63,4 +65,11 @@ public class TaskController {
         }
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/tasks")
+    @ResponseBody
+    public int delete(@RequestBody List<Long> idList) {
+        return service.deleteTask(idList);
+    }
+
 }

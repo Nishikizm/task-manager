@@ -1,9 +1,9 @@
 <tbody th:fragment="taskList" id="list">
     <tr th:each="task: ${tasks}">
-        <td><input type="checkbox"></td>
+        <td><input type="checkbox" th:value="${task.id}" class="check"></td>
         <td th:text="${task.title}">Sample</td>
         <td th:text="${task.deadline}">Sample</td>
         <td><input type="checkbox" th:checked="${task.completed}" th:disabled="${task.completed}"></td>
-        <td><a href="#">Edit</a><a href="#">Delete</a></td>
+        <td><a href="#">Edit</a>
     </tr>
 </tbody>
