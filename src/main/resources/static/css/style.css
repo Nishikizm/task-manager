@@ -1,20 +1,17 @@
 body {
+    background-color: #f9fafb;
     text-align: center;
-}
-
-h1 {
-    color: red;
 }
 
 table {
     margin: auto;
-}
-
-table, th, td {
+    border-collapse: collapse;
     border: 1px solid black;
+    background-color: white;
 }
 
 th, td {
+    border-bottom: 1px solid black;
     width: 200px;
     text-align: center;
 }
@@ -27,6 +24,31 @@ button {
     cursor: pointer;
 }
 
+.control {
+    border: none;
+    padding: 5px;
+    width: 100px;
+    border-radius: 3px;
+    background-color: #698e76;
+    color: white;
+    font-weight: bold;
+}
+
+.control:hover {
+    background-color: #50725c;
+}
+
+.control:active {
+    background-color: #405f4b;
+}
+
+.close {
+    background: none;
+    border: none;
+    font-size: x-large;
+    color: #a9a9a9;
+}
+
 .editBtn {
     border: none;
     background: none;
@@ -36,11 +58,11 @@ button {
 }
 
 #list tr:hover {
-    background-color: aquamarine;
+    background-color: #e1e8e4;
 }
 
 .is-active {
-    background-color: aquamarine;
+    background-color: #e1e8e4;
 }
 
 label {

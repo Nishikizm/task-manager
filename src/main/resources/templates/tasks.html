@@ -7,8 +7,8 @@
     </head>
     <body>
         <h1>Task List</h1>
-        <button type="button" class="openModal">Add Task</button>
-        <button type="button" id="delete">Delete</button>
+        <button type="button" class="openModal control">Add Task</button>
+        <button type="button" id="delete" class="control">Delete</button>
         <table>
             <thead>
                 <tr>
@@ -26,7 +26,7 @@
         <div id="modalOverlay">
             <div id="modalForm">
                 <div class="closeModal">
-                    <button type="button">×</button>
+                    <button type="button" class="close">×</button>
                 </div>
                 <div th:replace="~{fragments/form :: inputForm}">
                 </div>

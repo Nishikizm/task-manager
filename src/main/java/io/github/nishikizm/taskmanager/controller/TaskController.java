@@ -39,7 +39,7 @@ public class TaskController {
     public String getCreateForm(Model model) {
         model.addAttribute("taskForm", new TaskCreateForm("", "", 2026, 1, 1, "00:00", false));
         model.addAttribute("url", "/tasks");
-        model.addAttribute("method", "post");
+        model.addAttribute("method", "POST");
         model.addAttribute("resetBtnMessage", "Clear");
         model.addAttribute("resetId", "");
         model.addAttribute("resetBtn", "clear");
@@ -53,7 +53,7 @@ public class TaskController {
         TaskCreateForm form = service.findOne(id);
         model.addAttribute("taskForm", form);
         model.addAttribute("url", "/tasks"); // 修正要
-        model.addAttribute("method", "patch");
+        model.addAttribute("method", "PATCH");
         model.addAttribute("resetBtnMessage", "Reset");
         model.addAttribute("resetId", "id");
         model.addAttribute("resetBtn", "reset");

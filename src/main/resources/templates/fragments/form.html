@@ -45,8 +45,8 @@
             <input type="checkbox" th:field="*{completed}">
         </div>
         <div class="formParts formActions">
-            <button type="reset" th:text="${resetBtnMessage}" th:value="${resetId}" th:id="${resetBtn}"></button>
-            <button type="submit" id="formBtn" th:text="${btnMessage}"></button>
+            <button type="reset" th:text="${resetBtnMessage}" th:value="${resetId}" th:id="${resetBtn}" class="control"></button>
+            <button type="submit" id="formBtn" th:text="${btnMessage}" class="control"></button>
         </div>
     </form>
 </section>
