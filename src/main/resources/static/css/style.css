@@ -23,6 +23,18 @@ td a {
     margin: 3px;
 }
 
+button {
+    cursor: pointer;
+}
+
+.editBtn {
+    border: none;
+    background: none;
+    color: blue;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 #list tr:hover {
     background-color: aquamarine;
 }

@@ -48,6 +48,13 @@ public class TaskService {
             .toList();
     }
 
+    @Transactional(readOnly = true)
+    public TaskCreateForm findOne(Long id) {
+        Task task = repository.findById(id)
+            .orElseThrow(() -> new TaskNotFoundException(id));
+        return mapper.toCreateForm(task);
+    }
+ 
     @Transactional
     public int deleteTask(List<Long> idList) {
         List<Long> uniqueIdList = idList.stream()

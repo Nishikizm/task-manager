@@ -6,7 +6,7 @@ $(function() {
     });
 
     $('.openModal').on('click', function(e) {
-        $.get('tasks/form', function(html) {
+        $.get('tasks/create', function(html) {
             $('#formFragment').replaceWith(html);
             $('#modalOverlay').fadeIn();
             $('#title').focus();
@@ -26,6 +26,19 @@ $(function() {
         if(!$back.length) { $('#modalOverlay').fadeOut(); }
     });
 
+    $(document).on('click', '.editBtn', function(e) {
+        $.get('tasks/patch/' + $(this).val(), function(html) {
+            $('#formFragment').replaceWith(html);
+            $('#modalOverlay').fadeIn();
+        });
+    });
+
+     $(document).on('click', '#reset', function(e) {
+        $.get('tasks/patch/' + $(this).val(), function(html) {
+            $('#formFragment').replaceWith(html);
+        });
+    });
+
     // $(document).on('change', 'td input[type=checkbox]', function(e) {
         // $(this).prop('disabled', true);
     // });
@@ -40,7 +53,7 @@ $(function() {
         $btn.prop('disabled', true).text('Saving...');
         $.ajax({
             url: $form.attr('action'), 
-            type: $form.attr('method'), 
+            type: $form.attr('data-method'), 
             data: $form.serialize()
         })
         .done(function() {
@@ -53,7 +66,7 @@ $(function() {
             alert('エラー');
         })
         .always(function() {
-            $btn.prop('disabled', false).text('Submit');
+            $btn.prop('disabled', false).text('Create');
         })
     });
 
