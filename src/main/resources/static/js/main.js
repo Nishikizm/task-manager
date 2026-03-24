@@ -1,6 +1,10 @@
 $(function() {
     // console.log("main.js loaded");
 
+    const FORM_FIELDS = ['title', 'description', 'year', 'month', 'day', 'time', 'completed'];
+    const $modal = $('#modalOverlay');
+    let snapshot = {};
+
     $(document).on('change', '.check', function() {
         $(this).closest('tr').toggleClass('is-active');
     });
@@ -8,28 +12,29 @@ $(function() {
     $('.openModal').on('click', function(e) {
         $.get('tasks/create', function(html) {
             $('#formFragment').replaceWith(html);
-            $('#modalOverlay').fadeIn();
+            $modal.fadeIn();
             $('#title').focus();
         });
     });
 
     $('.closeModal').on('click', function(e) {
-        $('#modalOverlay').fadeOut();
+        modalClose();
     });
 
     $(document).on('keydown', function(e) {
-        if(e.key === 'Escape') { $('#modalOverlay').fadeOut(); }
+        if(e.key === 'Escape') { modalClose(); }
     });
 
-    $('#modalOverlay').on('click', function(e) {
+    $modal.on('click', function(e) {
         const $back = $(e.target).closest('#modalForm');
-        if(!$back.length) { $('#modalOverlay').fadeOut(); }
+        if(!$back.length) { modalClose(); }
     });
 
     $(document).on('click', '.editBtn', function(e) {
         $.get('tasks/patch/' + $(this).val(), function(html) {
             $('#formFragment').replaceWith(html);
-            $('#modalOverlay').fadeIn();
+            $modal.fadeIn();
+            takeSnapshot($('#formFragment'));
         });
     });
 
@@ -51,23 +56,28 @@ $(function() {
         const $btn = $form.find('#formBtn');
 
         $btn.prop('disabled', true).text('Saving...');
-        $.ajax({
-            url: $form.attr('action'), 
-            type: $form.attr('data-method'), 
-            data: $form.serialize()
-        })
-        .done(function() {
-            $.get('/tasks/list', function(li) {
-                $('#list').replaceWith(li);
-                $('#modalOverlay').fadeOut();
-            });
-        })
-        .fail(function() {
-            alert('エラー');
-        })
-        .always(function() {
-            $btn.prop('disabled', false).text('Create');
-        })
+
+        if($form.data('method') === 'POST') {
+            $.ajax({
+                url: $form.attr('action'), 
+                type: $form.attr('data-method'), 
+                data: $form.serialize()
+            })
+            .done(function() {
+                $.get('/tasks/list', function(li) {
+                    $('#list').replaceWith(li);
+                    modalClose();
+                });
+            })
+            .fail(function() {
+                alert('エラー');
+            })
+            .always(function() {
+                $btn.prop('disabled', false).text('Create');
+            })
+        } else if($form.data('method') === 'PATCH') {
+
+        }
     });
 
     $('#delete').on('click', function(e) {
@@ -94,7 +104,6 @@ $(function() {
         .done(function(data) {
             $.get('/tasks/list', function(li) {
                 $('#list').replaceWith(li);
-                
             })
             setTimeout(function() {
                 alert(data + '件を削除しました');
@@ -107,5 +116,26 @@ $(function() {
             $btn.prop('disabled', false).text('Delete');
         })
     });
+
+    function takeSnapshot($form) {
+        for(const f of FORM_FIELDS) {
+            snapshot[f] = normalize($form.find(`[name='${f}']`));
+        }
+    }
+
+    function normalize($target) {
+        const field = $target.attr('name');
+        const value = $target.val();
+
+        if($target.is(':checkbox')) { return $target.prop('checked'); }
+        if(value === null || value.trim() === '') { return null; }
+        if(field === 'year' || field === 'month' || field === 'day') { return Number(value); }
+        return String(value);
+    }
+
+    function modalClose() {
+        snapshot = {};
+        $modal.fadeOut();
+    }
 
 });

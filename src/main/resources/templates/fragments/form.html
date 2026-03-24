@@ -41,8 +41,9 @@
             </fieldset>
         </div>
         <div class="formParts">
-            <label th:for="*{completed}">Completed</label>
-            <input type="checkbox" th:field="*{completed}">
+            <label>Completed<br>
+                <input type="checkbox" th:field="*{completed}">
+            </label>
         </div>
         <div class="formParts formActions">
             <button type="reset" th:text="${resetBtnMessage}" th:value="${resetId}" th:id="${resetBtn}" class="control"></button>
